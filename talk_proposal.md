@@ -1,7 +1,5 @@
 # Talk Proposal
 
-Link to [ChatGPT brainstorming](https://chatgpt.com/share/e/67e1d8d7-a218-8010-9c6f-20e328eb6614)
-
 ## Title
 
 Behind the Magic: Unlocking Python's Descriptor Protocol
@@ -10,23 +8,23 @@ Behind the Magic: Unlocking Python's Descriptor Protocol
 
 Ever wondered _how_ `@property` works? Or why setting an attribute sometimes just feels... different? That curiosity led me down a rabbit hole - one that ends with Python’s powerful, often invisible, descriptor protocol.
 
-In this talk, we’ll demystify descriptors through a journey that starts with a question and unfolds into a deeper understanding of how Python decides what to return when you access `obj.attr`. We’ll explore the two types of descriptors, peek into the attribute lookup chain, and build up real-world examples - like a CartesianPoint2D class with read-only, cached, and validated attributes.
+In this talk, we’ll demystify descriptors through a journey that starts with a question and unfolds into a deeper understanding of how Python decides what to return when you access `obj.attr`. We’ll explore the two types of descriptors, peek into the attribute lookup chain, and build up real-world examples - like a class with read-only, cached, and validated attributes.
 
 Descriptors are hiding in plain sight and you’ll walk away with a clear grasp of how they underpin many familiar features: properties, class/static methods, slots, and more. Whether you’ve used them unknowingly for years or never heard of them before, come peel back the curtain and see one of the things that makes Python tick.
 
 ## Objective
 
-This talk aims to demystify Python’s descriptor protocol by giving attendees a clear, conceptual understanding of how attribute access and lookup actually work under the hood. Through real-world examples and progressive refinements, we’ll explore both data and non-data descriptors and see how they influence everyday features like `@property`, `@classmethod`, and more. While most Python developers rarely need to write their own descriptors, this talk will show that doing so is straightforward once the underlying mechanics are understood. Attendees will leave with a new appreciation for the magic behind familiar syntax and, ideally, a spark of curiosity to explore Python’s internals more deeply.
+This talk aims to demystify Python’s descriptor protocol by giving attendees a clear, conceptual understanding of how attribute access and lookup actually work under the hood. Through examples and progressive refinements, we’ll explore both data and non-data descriptors and see how they are connected to everyday features like `@property`, `@classmethod`, and more. While most Python developers rarely need to write their own descriptors, this talk will show that doing so is straightforward once the underlying mechanics are understood. Attendees will leave with a new appreciation for the magic behind familiar syntax and, ideally, a spark of curiosity to explore Python’s internals more deeply.
 
 ## Detailed description
 
 Descriptors are one of the most powerful—and most invisible—parts of Python. They’re the foundation for familiar features like `@property`, `@classmethod`, and even `__slots__`. But despite their importance, many Python developers (my past self included) use them every day without knowing how they work.
 
-This talk follows a storytelling arc driven by curiosity: after seeing a lightning talk on descriptors, I couldn’t stop wondering how `@property` actually works under the hood. That curiosity led me down a deep rabbit hole of Python internals - and ultimately to this talk.
+This talk is driven by curiosity: after seeing a lightning talk on descriptors, I couldn’t stop wondering how `@property` actually works under the hood. That curiosity led me down a deep rabbit hole of Python internals - and ultimately to this talk.
 
 We’ll explore descriptors primarily through live coding, starting with simple, focused examples and then gradually building up a core case study: a `CartesianPoint2D` class. Along the way, we’ll look at how Python handles attribute lookup, the difference between data and non-data descriptors, and how descriptors can be used for computed attributes, caching, and validation.
 
-The goal is to demystify descriptors and show that they’re not just for language wizards—once you understand the underlying mechanics, writing your own is surprisingly straightforward. Attendees should walk away with a deeper understanding of Python’s object model and a new perspective on features they already use every day.
+The goal is to demystify descriptors and show that they’re not just for language wizards - once you understand the underlying mechanics, writing your own is surprisingly straightforward. Attendees should walk away with a deeper understanding of Python’s object model and a new perspective on features they already use every day.
 
 ## Outline
 
@@ -42,13 +40,16 @@ The goal is to demystify descriptors and show that they’re not just for langua
   - The two types:
     - Data descriptors (`__get__`, `__set__`)
     - Non-data descriptors (`__get__` only)
+- *Why* Wraite a Descriptor
+  - Avoid duplicated code
 - Attribute Lookup (Basic View)
-  - How attribute access works without descriptors
-  - Where Python looks: instance → class → `__dict__`
+  - Data Descriptor
+  - `self.__dict__['attrib']`
+  - Non-Data Descriptor
 - Basic Descriptor Examples
-  - **Non-Data Descriptor**
+  - Non-Data Descriptor
     - Simple example: computed read-only attribute
-  - **Data Descriptor**
+  - Data Descriptor
     - Adding a setter
     - Demonstrating difference in precedence
 - Case Study: `CartesianPoint2D`
@@ -60,8 +61,11 @@ The goal is to demystify descriptors and show that they’re not just for langua
     - Coordinate system conversion
   - Add validation to `r` (`r >= 0`)
 - Attribute Lookup (Full View)
-  - Complete lookup order with descriptors
-  - Interaction with instance `__dict__`, `__slots__`, and class `__dict__`
+  - Data Descriptor
+  - `self.__dict__['attrib']`
+  - Non-Data Descriptor
+  - Class attributes
+  - Raise AttributeError (which triggers `__getattr__`)
 - Common and Powerful Uses of Descriptors
   1. class methods (bound functions)
   2. `@property`
