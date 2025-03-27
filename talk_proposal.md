@@ -22,7 +22,7 @@ Descriptors are one of the most powerful—and most invisible—parts of Python.
 
 This talk is driven by curiosity: after seeing a lightning talk on descriptors, I couldn’t stop wondering how `@property` actually works under the hood. That curiosity led me down a deep rabbit hole of Python internals - and ultimately to this talk.
 
-We’ll explore descriptors primarily through live coding, starting with simple, focused examples and then gradually building up a core case study: a `CartesianPoint2D` class. Along the way, we’ll look at how Python handles attribute lookup, the difference between data and non-data descriptors, and how descriptors can be used for computed attributes, caching, and validation.
+We’ll explore descriptors primarily through live coding, starting with simple, focused examples and then gradually building up a core case study. Along the way, we’ll look at how Python handles attribute lookup, the difference between data and non-data descriptors, and how descriptors can be used for computed attributes, caching, and validation.
 
 The goal is to demystify descriptors and show that they’re not just for language wizards - once you understand the underlying mechanics, writing your own is surprisingly straightforward. Attendees should walk away with a deeper understanding of Python’s object model and a new perspective on features they already use every day.
 
